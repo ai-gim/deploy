@@ -11,8 +11,7 @@
 	</appender>
 
 	<appender name="ApiRollingFile" class="org.apache.log4j.RollingFileAppender">  
-		<!-- <param name="File" value="/var/log/gim/deploy/api.log" /> -->
-		<param name="File" value="E:/test_log/log/gim/deploy/api.log" />
+		<param name="File" value="/var/log/gim/deploy/api.log" />
 		<param name="Append" value="true" />
 		<param name="MaxBackupIndex" value="10" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -21,8 +20,7 @@
 	</appender>
 	
 	<appender name="RollingFile" class="org.apache.log4j.RollingFileAppender">  
-		<!-- <param name="File" value="/var/log/gim/deploy/deploy.log" /> -->
-		<param name="File" value="E:/test_log/log/gim/deploy/deploy.log" />
+		<param name="File" value="/var/log/gim/deploy/deploy.log" />
 		<param name="Append" value="true" />
 		<param name="MaxBackupIndex" value="10" />
 		<layout class="org.apache.log4j.PatternLayout">
