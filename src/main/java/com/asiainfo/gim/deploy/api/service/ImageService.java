@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.asiainfo.gim.common.spring.SpringContext;
 import com.asiainfo.gim.deploy.domain.Distro;
 import com.asiainfo.gim.deploy.domain.Image;
+import com.asiainfo.gim.deploy.domain.IsoFile;
 import com.asiainfo.gim.deploy.file.FileUtil;
 import com.asiainfo.gim.deploy.xcat.image.ImageResourceReq;
 import com.asiainfo.gim.deploy.xcat.image.ImageResourceServiceStub;
@@ -43,8 +44,7 @@ public class ImageService {
 
 	public void createImage(Image image) {
 		ImageResourceReq req = new ImageResourceReq();
-		String isoPath = SpringContext.getProperty("xcat.mn.isopath");
-		req.setIso(isoPath + "/" + image.getIsoFile());
+		req.setIso(image.getIsoFile());
 		req.setArch(image.getOsarch());
 		req.setOsvers(image.getOsvers());
 		imageResourceServiceStub.createOsImage(req);
@@ -52,24 +52,35 @@ public class ImageService {
 
 	public void deleteDistro(String distroName) {
 		imageResourceServiceStub.deleteOsDistro(distroName);
+		//删除镜像文件
+		List<Distro> distroList = listOsDistro();
+		for(Distro distro : distroList){
+			if(StringUtils.equals(distroName, distro.getOsdistroname())){
+				FileUtil.deleteFile(new File(distro.getDirpaths()));
+			}
+		}
 	}
 	
 	public void deleteImage(String imageName){
 		imageResourceServiceStub.deleteOsImage(imageName);
 	}
 	
-	public List<String> listIsoFiles(String dir){
+	public List<IsoFile> listIsoFiles(String dir){
 		String isoPath;
 		if(StringUtils.isBlank(dir)){
 			isoPath = SpringContext.getProperty("xcat.mn.isopath");
 		}else{
 			isoPath = dir;
 		}
-		List<File> fileList = FileUtil.listFile(isoPath);
-		List<String> isoList = new ArrayList<String>();
+		List<File> fileList = new ArrayList<File>();
+		fileList = FileUtil.listFile(new File(isoPath),fileList);
+		List<IsoFile> isoList = new ArrayList<IsoFile>();
 		for(File file : fileList){
 			if(file.isFile() && StringUtils.endsWithIgnoreCase(file.getName(), ".iso")){
-				isoList.add(file.getName());
+				IsoFile iso = new IsoFile();
+				iso.setFileName(file.getName());
+				iso.setFilePath(file.getAbsolutePath());
+				isoList.add(iso);
 			}
 		}
 		return isoList;
