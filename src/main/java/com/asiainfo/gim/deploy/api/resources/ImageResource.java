@@ -16,6 +16,7 @@ import com.asiainfo.gim.deploy.api.service.ImageService;
 import com.asiainfo.gim.deploy.api.validator.ImageValidator;
 import com.asiainfo.gim.deploy.domain.Distro;
 import com.asiainfo.gim.deploy.domain.Image;
+import com.asiainfo.gim.deploy.domain.IsoFile;
 
 @Path("/imageres")
 @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +70,7 @@ public class ImageResource
 	
 	@GET
 	@Path("/isofiles")
-	public List<String> listIsoFiles(@QueryParam(value = "isodir") String isoDir){
+	public List<IsoFile> listIsoFiles(@QueryParam(value = "isodir") String isoDir){
 		return imageService.listIsoFiles(isoDir);
 	}
 }
