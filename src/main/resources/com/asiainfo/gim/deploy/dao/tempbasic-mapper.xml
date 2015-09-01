@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplateBasicConfDao">
+	<resultMap id="templateBasic"
+		type="com.asiainfo.gim.deploy.domain.TemplateBasicConf">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="attr" column="attr" />
+		<result property="value" column="value" />
+	</resultMap>
+
+	<insert id="createTempBasicConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateBasicConf"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		template_basic_conf(template_id, attr, value)
+		value(#{templateId},
+		#{attr}, #{value});
+	</insert>
+
+	<update id="updateTempBasicConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateBasicConf">
+		update
+		template_basic_conf set template_id = #{templateId}, attr = #{attr}, value = #{value} where id = #{id};
+	</update>
+
+	<select id="listTempBasicConfByTemplateId" resultMap="templateBasic"
+		parameterType="java.lang.String">
+		select id, template_id, attr, value from
+		template_basic_conf
+		where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTempBasicConfByTemplateId" parameterType="java.lang.String">
+		delete from template_basic_conf where template_id = #{templateId};
+	</delete>
+
+	<delete id="deleteTempBasicConf" parameterType="java.lang.Integer">
+		delete from template_basic_conf where id = #{id};
+	</delete>
+
+</mapper>

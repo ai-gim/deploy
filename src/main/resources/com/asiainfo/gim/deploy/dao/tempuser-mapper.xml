@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplateUserConfDao">
+	<resultMap id="templateUser"
+		type="com.asiainfo.gim.deploy.domain.TemplateUserConf">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="name" column="name" />
+		<result property="groups" column="groups" />
+		<result property="homeDir" column="homedir" />
+		<result property="password" column="password" />
+		<result property="isCrypted" column="iscrypted" />
+		<result property="shell" column="shell" />
+		<result property="uid" column="uid" />
+	</resultMap>
+
+	<insert id="createTempUserConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateUserConf"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		template_user_conf(template_id, `name`, groups, homedir, password, iscrypted, shell, uid)
+		value(#{templateId},#{name},#{groups},#{homeDir},#{password},#{isCrypted},#{shell},#{uid});
+	</insert>
+
+	<update id="updateTempUserConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateUserConf">
+		update
+		template_user_conf set 
+		template_id = #{templateId}, 
+		`name` = #{name}, 
+		groups = #{groups}, 
+		homedir = #{homeDir}, 
+		password = #{password}, 
+		iscrypted = #{isCrypted}, 
+		shell = #{shell}, 
+		uid = #{uid} 
+		where id = #{id};
+	</update>
+
+	<select id="listTempUserByTemplateId" resultMap="templateUser"
+		parameterType="java.lang.String">
+		select 
+		* 
+		from
+		template_user_conf
+		where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTempUserConfByTemplateId" parameterType="java.lang.String">
+		delete from template_user_conf where template_id = #{templateId};
+	</delete>
+
+	<delete id="deleteTempUserConf" parameterType="java.lang.Integer">
+		delete from template_user_conf where id = #{id};
+	</delete>
+
+</mapper>

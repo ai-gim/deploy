@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplateLogVolConfDao">
+	<resultMap id="templateLogVol"
+		type="com.asiainfo.gim.deploy.domain.TemplateLogVolConf">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="mntPoint" column="mntpoint" />
+		<result property="vgName" column="vgname" />
+		<result property="size" column="size" />
+		<result property="name" column="name" />
+		<result property="useExisting" column="useexisting" />
+		<result property="noFormat" column="noformat" />
+		<result property="fsType" column="fstype" />
+		<result property="fsOptions" column="fsoptoins" />
+		<result property="bytePerInode" column="byte_pre_inode" />
+		<result property="precent" column="precent" />
+	</resultMap>
+
+	<insert id="createTempLogVolConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateLogVolConf"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		template_logvol_conf(template_id, mntpoint, vgname, size, `name`, useexisting, noformat, fstype, fsoptoins, byte_pre_inode, precent)
+		value(#{templateId},#{mntPoint},#{vgName},#{size},#{name},#{useExisting},#{noFormat},#{fsType},#{fsOptions},#{bytePerInode},#{precent});
+	</insert>
+
+	<update id="updateTempLogVolConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateLogVolConf">
+		update
+		template_logvol_conf set 
+		template_id = #{templateId}, 
+		mntpoint = #{mntPoint}, 
+		vgname = #{vgName}, 
+		size = #{size}, 
+		`name` = #{name}, 
+		useexisting = #{useExisting}, 
+		noformat = #{noFormat}, 
+		fstype = #{fsType}, 
+		fsoptoins = #{fsOptions}, 
+		byte_pre_inode = #{bytePerInode}, 
+		precent = #{precent}, 
+		where id = #{id};
+	</update>
+
+	<select id="listTempLogVolByTemplateId" resultMap="templateLogVol"
+		parameterType="java.lang.String">
+		select 
+		id, template_id, mntpoint, vgname, size, `name`, useexisting, noformat, fstype, fsoptoins, byte_pre_inode, precent 
+		from
+		template_logvol_conf
+		where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTempLogVolConfByTemplateId" parameterType="java.lang.String">
+		delete from template_logvol_conf where template_id = #{templateId};
+	</delete>
+
+	<delete id="deleteTempLogVolConf" parameterType="java.lang.Integer">
+		delete from template_logvol_conf where id = #{id};
+	</delete>
+
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplatePartConfDao">
+	<resultMap id="templatePart"
+		type="com.asiainfo.gim.deploy.domain.TemplatePartConf">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id" />
+		<result property="mntPoint" column="mntpoint" />
+		<result property="grow" column="grow" />
+		<result property="size" column="size" />
+		<result property="maxSize" column="maxsize" />
+		<result property="noFormat" column="noformat" />
+		<result property="onPart" column="onpart" />
+		<result property="onDisk" column="ondisk" />
+		<result property="asPrimary" column="asprimary" />
+		<result property="fsType" column="fstype" />
+		<result property="start" column="start" />
+		<result property="end" column="end" />
+		<result property="bytesPerInode" column="bytes_per_inode" />
+		<result property="recommended" column="recommended" />
+		<result property="onBiosDisk" column="onbiosdisk" />
+		<result property="fsOptions" column="fsoptions" />
+	</resultMap>
+
+	<insert id="createTempPartConf" parameterType="com.asiainfo.gim.deploy.domain.TemplatePartConf"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		template_part_conf(template_id, mntpoint, grow, size, maxsize, noformat, onpart, ondisk, asprimary, fstype, start, end, bytes_per_inode, recommended, onbiosdisk, fsoptions)
+		value(#{templateId},#{mntPoint},#{grow},#{size},#{maxSize},#{noFormat},#{onPart},#{onDisk},#{asPrimary},#{fsType},#{start},#{end},#{bytesPerInode},#{recommended},#{onBiosDisk},#{fsOptions});
+	</insert>
+
+	<update id="updateTempPartConf" parameterType="com.asiainfo.gim.deploy.domain.TemplatePartConf">
+		update
+		template_part_conf set 
+		template_id = #{templateId}, 
+		mntpoint = #{mntPoint}, 
+		grow = #{grow}, 
+		size = #{size}, 
+		maxsize = #{maxSize}, 
+		noformat = #{noFormat}, 
+		onpart = #{onPart}, 
+		ondisk = #{onDisk}, 
+		asprimary = #{asPrimary}, 
+		fstype = #{fsType}, 
+		start = #{start}, 
+		end = #{end}, 
+		bytes_per_inode = #{bytesPerInode}, 
+		recommended = #{recommended}, 
+		onbiosdisk = #{onBiosDisk}, 
+		fsoptions = #{fsOptions} 
+		where id = #{id};
+	</update>
+
+	<select id="listTempPartByTemplateId" resultMap="templatePart"
+		parameterType="java.lang.String">
+		select 
+		* 
+		from
+		template_part_conf
+		where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTempPartConfByTemplateId" parameterType="java.lang.String">
+		delete from template_part_conf where template_id = #{templateId};
+	</delete>
+
+	<delete id="deleteTempPartConf" parameterType="java.lang.Integer">
+		delete from template_part_conf where id = #{id};
+	</delete>
+
+</mapper>
