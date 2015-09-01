@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplateInfoDao">
+	<resultMap id="templateInfo" type="com.asiainfo.gim.deploy.domain.TemplateInfo">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id"/>
+		<result property="createTime" column="create_date"/>
+		<result property="name" column="name"/>
+		<result property="desc" column="desc"/>
+	</resultMap>
+
+	<insert id="createTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo" 
+		useGeneratedKeys="true" keyProperty="id">
+		insert into template_info(template_id, create_date, `name`, `desc`)
+		value(#{templateId}, #{createTime}, #{name}, #{desc});
+	</insert>
+	
+	<update id="updateTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo">
+		update template_info set `name` = #{name}, `desc` = #{desc} where template_id = #{templateId};
+	</update>
+	
+	<select id="listTemplateInfo" resultMap="templateInfo">
+		select id, template_id, create_date, `name`, `desc` from template_info
+	</select>
+	
+	<select id="findTempateInfoByTemplateId" resultMap="templateInfo" parameterType="java.lang.String">
+		select id, template_id, create_date, `name`, `desc` from template_info
+		where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTemplateInfo" parameterType="java.lang.String">
+		delete from template_info where template_id = #{templateId};
+	</delete>
+	
+</mapper>
