@@ -12,7 +12,7 @@ import javax.ws.rs.core.Context;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.asiainfo.gim.deploy.domain.KickStartConf;
+import com.asiainfo.gim.deploy.domain.TemplateConf;
 
 
 @Retention(RetentionPolicy.RUNTIME)
@@ -23,7 +23,7 @@ public @interface TemplateValidator
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 	
-	public class Valicator implements ConstraintValidator<TemplateValidator, KickStartConf>
+	public class Valicator implements ConstraintValidator<TemplateValidator, TemplateConf>
 	{
 		@Context
 		private ContainerRequestContext context;
@@ -35,7 +35,7 @@ public @interface TemplateValidator
 		}
 
 		@Override
-		public boolean isValid(KickStartConf temp, ConstraintValidatorContext cv)
+		public boolean isValid(TemplateConf temp, ConstraintValidatorContext cv)
 		{
 			if (StringUtils.equals(context.getMethod(), "POST") )
 			{

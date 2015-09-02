@@ -1,5 +1,7 @@
 package com.asiainfo.gim.deploy.api.resources;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +16,7 @@ import com.asiainfo.gim.common.rest.exception.ResourceNotFoundException;
 import com.asiainfo.gim.common.spring.SpringContext;
 import com.asiainfo.gim.deploy.api.service.TemplateService;
 import com.asiainfo.gim.deploy.api.validator.TemplateValidator;
-import com.asiainfo.gim.deploy.domain.KickStartConf;
+import com.asiainfo.gim.deploy.domain.TemplateConf;
 import com.asiainfo.gim.deploy.domain.TemplateInfo;
 
 @Path("/templateres")
@@ -32,15 +34,15 @@ public class TemplateResource {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public KickStartConf createOrUpdateTemplate(@TemplateValidator KickStartConf kickStartConf){
-		if(StringUtils.isNotBlank(kickStartConf.getTempInfo().getTemplateId())){
-			TemplateInfo info = templateService.getTemplateInfo(kickStartConf.getTempInfo().getTemplateId());
+	public TemplateConf createOrUpdateTemplate(@TemplateValidator TemplateConf templateConf){
+		if(StringUtils.isNotBlank(templateConf.getTempInfo().getTemplateId())){
+			TemplateInfo info = templateService.getTemplateInfo(templateConf.getTempInfo().getTemplateId());
 			if(info == null){
 				throw new ResourceNotFoundException();
 			}
-			return templateService.updateTemplate(kickStartConf);
+			return templateService.updateTemplate(templateConf);
 		}else{
-			return templateService.createTemplate(kickStartConf);
+			return templateService.createTemplate(templateConf);
 		}
 	}
 	
@@ -52,12 +54,17 @@ public class TemplateResource {
 	
 	@GET
 	@Path("{templateid}")
-	public KickStartConf getTemplate(){
+	public TemplateConf getTemplate(){
 		TemplateInfo info = templateService.getTemplateInfo(templateId);
 		if(info == null){
 			throw new ResourceNotFoundException();
 		}
 		return templateService.queryTemplate(templateId);
+	}
+	
+	@GET
+	public List<TemplateInfo> listTemplate(){
+		return templateService.listTemplateInfo();
 	}
 	
 }

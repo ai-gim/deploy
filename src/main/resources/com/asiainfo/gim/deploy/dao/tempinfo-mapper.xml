@@ -9,25 +9,26 @@
 		<result property="templateId" column="template_id"/>
 		<result property="createTime" column="create_date"/>
 		<result property="name" column="name"/>
+		<result property="type" column="type"/>
 		<result property="desc" column="desc"/>
 	</resultMap>
 
 	<insert id="createTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo" 
 		useGeneratedKeys="true" keyProperty="id">
-		insert into template_info(template_id, create_date, `name`, `desc`)
-		value(#{templateId}, #{createTime}, #{name}, #{desc});
+		insert into template_info(template_id, create_date, `name`, `type`, `desc`)
+		value(#{templateId}, #{createTime}, #{name}, #{type}, #{desc});
 	</insert>
 	
 	<update id="updateTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo">
-		update template_info set `name` = #{name}, `desc` = #{desc} where template_id = #{templateId};
+		update template_info set `name` = #{name}, `type`=type, `desc` = #{desc} where template_id = #{templateId};
 	</update>
 	
 	<select id="listTemplateInfo" resultMap="templateInfo">
-		select id, template_id, create_date, `name`, `desc` from template_info
+		select id, template_id, create_date, `name`, `type`, `desc` from template_info
 	</select>
 	
 	<select id="findTempateInfoByTemplateId" resultMap="templateInfo" parameterType="java.lang.String">
-		select id, template_id, create_date, `name`, `desc` from template_info
+		select id, template_id, create_date, `name`, `type`, `desc` from template_info
 		where template_id = #{templateId};
 	</select>
 

@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS `template_info` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `name` VARCHAR(128) NULL,
+  `type` VARCHAR(45) NULL,
   `desc` VARCHAR(512) NULL,
   `create_date` DATETIME NULL,
   PRIMARY KEY (`id`),
