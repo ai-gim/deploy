@@ -32,7 +32,7 @@ public class ImageResource
 	
 	public ImageResource()
 	{
-		imageService = SpringContext.getBean(ImageService.class);
+		imageService = (ImageService) SpringContext.getBean("imageService");
 	}
 
 	@POST

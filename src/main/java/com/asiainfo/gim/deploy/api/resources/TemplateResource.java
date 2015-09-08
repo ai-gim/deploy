@@ -29,7 +29,7 @@ public class TemplateResource {
 	private String templateId;
 	
 	public TemplateResource(){
-		templateService = SpringContext.getBean(TemplateService.class);
+		templateService = (TemplateService) SpringContext.getBean("templateService");
 	}
 	
 	@POST
