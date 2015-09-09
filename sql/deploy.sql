@@ -86,3 +86,14 @@ CREATE TABLE IF NOT EXISTS `image_default_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `post_scripts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(128) NULL,
+  `desc` VARCHAR(512) NULL,
+  `file_path` VARCHAR(256) NULL,
+  `create_time` DATETIME NULL,
+  `type` VARCHAR(45) NULL,
+  `file_name` VARCHAR(128) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+

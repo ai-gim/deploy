@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.PostScriptsDao">
+	<resultMap id="postscripts"
+		type="com.asiainfo.gim.deploy.domain.PostScripts">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="desc" column="desc" />
+		<result property="filePath" column="file_path" />
+		<result property="createTime" column="create_time" />
+		<result property="type" column="type" />
+		<result property="fileName" column="file_name" />
+	</resultMap>
+
+	<insert id="createPostScripts" parameterType="com.asiainfo.gim.deploy.domain.PostScripts"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		post_scripts(`name`, `desc`, file_path, file_name, create_time, `type`)
+		value(#{name}, #{desc}, #{filePath},#{fileName}, #{createTime}, #{type});
+	</insert>
+
+	<update id="updatePostScripts" parameterType="com.asiainfo.gim.deploy.domain.PostScripts">
+		update
+		post_scripts set `name` = #{name}, `desc` = #{desc} where id = #{id};
+	</update>
+
+	<select id="listPostScripts" resultMap="postscripts">
+		select * from post_scripts;
+	</select>
+	
+	<select id="findPostScriptsById" resultMap="postscripts" parameterType="java.lang.Integer">
+		select * from post_scripts where id = #{id};
+	</select>
+
+	<delete id="deletePostScriptsById" parameterType="java.lang.Integer">
+		delete from post_scripts where id = #{id};
+	</delete>
+
+</mapper>

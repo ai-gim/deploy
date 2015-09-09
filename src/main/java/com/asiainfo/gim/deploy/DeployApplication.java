@@ -1,5 +1,6 @@
 package com.asiainfo.gim.deploy;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
@@ -17,9 +18,11 @@ public class DeployApplication extends ResourceConfig
 
 		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
-		register(JacksonJsonProvider.class);
+		register(JacksonJsonProvider.class);	
 		register(DefaultExceptionMapper.class);
 		register(LogFilter.class);
+		
+		register(MultiPartFeature.class);
 
 		register(AuthorizationFilter.class);
 	}
