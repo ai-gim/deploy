@@ -7,7 +7,7 @@
          http://www.springframework.org/schema/context
          classpath:/org/springframework/context/config/spring-context-3.0.xsd
          http://www.springframework.org/schema/tx
-         http://www.springframework.org/schema/tx/spring-tx.xsd">
+         classpath:/org/springframework/transaction/config/spring-tx-3.0.xsd">
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="${database.driver}" />
