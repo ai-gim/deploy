@@ -92,5 +92,17 @@ public class TemplateUserConf {
 		this.uid = uid;
 	}
 	
+	public String toKickStartStr(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("user --name " + name);
+		if(groups != null){
+			sb.append(" --groups " + groups);
+		}
+		if(password != null){
+			sb.append(" --password " + password);
+		}
+		sb.append("\n\r");
+		return sb.toString();
+	}
 	
 }

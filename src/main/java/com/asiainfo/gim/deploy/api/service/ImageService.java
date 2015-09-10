@@ -10,8 +10,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.asiainfo.gim.common.spring.SpringContext;
+import com.asiainfo.gim.deploy.dao.ImageDefaultConfDao;
 import com.asiainfo.gim.deploy.domain.Distro;
 import com.asiainfo.gim.deploy.domain.Image;
+import com.asiainfo.gim.deploy.domain.ImageDefaultConf;
 import com.asiainfo.gim.deploy.domain.IsoFile;
 import com.asiainfo.gim.deploy.file.FileUtil;
 import com.asiainfo.gim.deploy.xcat.image.ImageResourceReq;
@@ -26,10 +28,17 @@ public class ImageService {
 
 	@Resource
 	private ImageResourceServiceStub imageResourceServiceStub;
+	
+	@Resource
+	private ImageDefaultConfDao imageDefaultConfDao;
 
 	public void setImageResourceServiceStub(
 			ImageResourceServiceStub imageResourceServiceStub) {
 		this.imageResourceServiceStub = imageResourceServiceStub;
+	}
+
+	public void setImageDefaultConfDao(ImageDefaultConfDao imageDefaultConfDao) {
+		this.imageDefaultConfDao = imageDefaultConfDao;
 	}
 
 	public List<Image> listOsImage() {
@@ -48,9 +57,26 @@ public class ImageService {
 		req.setArch(image.getOsarch());
 		req.setOsvers(image.getOsvers());
 		imageResourceServiceStub.createOsImage(req);
+		//更新镜像默认配置表deploy_image_default_conf
+		ImageResourceReq req1 = new ImageResourceReq();
+		List<ImageDefaultConf> imageConfList = imageResourceServiceStub.listLinuxImageConf(req1);
+		for(ImageDefaultConf imageConf : imageConfList){
+			ImageDefaultConf idc = imageDefaultConfDao.findImageDefaultConfByImageName(imageConf.getImageName());
+			//不存在，则新增
+			if(idc == null){
+				imageDefaultConfDao.createImageDefaultConf(imageConf);
+			}
+		}
 	}
 
 	public void deleteDistro(String distroName) {
+		ImageResourceReq req = new ImageResourceReq();
+		req.setOsdistroname(distroName);
+		List<Image> imageList = imageResourceServiceStub.listOsImages(req);
+		//删除镜像
+		for(Image image : imageList){
+			deleteImage(image.getImagename());
+		}
 		imageResourceServiceStub.deleteOsDistro(distroName);
 		//删除镜像文件
 		List<Distro> distroList = listOsDistro();
@@ -62,6 +88,7 @@ public class ImageService {
 	}
 	
 	public void deleteImage(String imageName){
+		imageDefaultConfDao.deleteImageDefaultConfByImageName(imageName);
 		imageResourceServiceStub.deleteOsImage(imageName);
 	}
 	

@@ -20,13 +20,13 @@
 	<insert id="createTempUserConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateUserConf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		template_user_conf(template_id, `name`, groups, homedir, password, iscrypted, shell, uid)
+		deploy_template_user_conf(template_id, `name`, groups, homedir, password, iscrypted, shell, uid)
 		value(#{templateId},#{name},#{groups},#{homeDir},#{password},#{isCrypted},#{shell},#{uid});
 	</insert>
 
 	<update id="updateTempUserConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateUserConf">
 		update
-		template_user_conf set 
+		deploy_template_user_conf set 
 		template_id = #{templateId}, 
 		`name` = #{name}, 
 		groups = #{groups}, 
@@ -43,16 +43,16 @@
 		select 
 		* 
 		from
-		template_user_conf
+		deploy_template_user_conf
 		where template_id = #{templateId};
 	</select>
 
 	<delete id="deleteTempUserConfByTemplateId" parameterType="java.lang.String">
-		delete from template_user_conf where template_id = #{templateId};
+		delete from deploy_template_user_conf where template_id = #{templateId};
 	</delete>
 
 	<delete id="deleteTempUserConf" parameterType="java.lang.Integer">
-		delete from template_user_conf where id = #{id};
+		delete from deploy_template_user_conf where id = #{id};
 	</delete>
 
 </mapper>

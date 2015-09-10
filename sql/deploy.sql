@@ -1,15 +1,16 @@
-CREATE TABLE IF NOT EXISTS `template_info` (
+CREATE TABLE IF NOT EXISTS `deploy_template_info` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `name` VARCHAR(128) NULL,
   `type` VARCHAR(45) NULL,
   `desc` VARCHAR(512) NULL,
   `create_date` DATETIME NULL,
+  `conf_file_path` VARCHAR(128) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `template_id_UNIQUE` (`template_id` ASC))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `template_basic_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_template_basic_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `attr` VARCHAR(45) NULL,
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `template_basic_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `template_user_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_template_user_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `name` VARCHAR(64) NULL,
@@ -30,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `template_user_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `template_part_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_template_part_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `mntpoint` VARCHAR(45) NULL,
@@ -51,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `template_part_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `template_volgroup_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_template_volgroup_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `name` VARCHAR(64) NULL,
@@ -62,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `template_volgroup_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `template_logvol_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_template_logvol_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `mntpoint` VARCHAR(45) NULL,
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `template_logvol_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `image_default_conf` (
+CREATE TABLE IF NOT EXISTS `deploy_image_default_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `image_name` VARCHAR(64) NULL,
   `template` VARCHAR(256) NULL,
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `image_default_conf` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `post_scripts` (
+CREATE TABLE IF NOT EXISTS `deploy_post_scripts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NULL,
   `desc` VARCHAR(512) NULL,

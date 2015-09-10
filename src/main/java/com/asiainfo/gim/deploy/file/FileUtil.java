@@ -1,6 +1,7 @@
 package com.asiainfo.gim.deploy.file;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class FileUtil {
@@ -43,5 +44,19 @@ public class FileUtil {
 		}
 		file.delete();
 	}
+	
+	public static boolean createFile(File file) throws IOException {  
+        if(! file.exists()) {  
+            makeDir(file.getParentFile());  
+        }  
+        return file.createNewFile();  
+    }
+	
+	public static void makeDir(File dir) {  
+        if(! dir.getParentFile().exists()) {  
+            makeDir(dir.getParentFile());  
+        }  
+        dir.mkdir();  
+    }
 
 }

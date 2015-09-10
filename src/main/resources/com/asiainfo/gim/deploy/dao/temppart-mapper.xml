@@ -28,13 +28,13 @@
 	<insert id="createTempPartConf" parameterType="com.asiainfo.gim.deploy.domain.TemplatePartConf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		template_part_conf(template_id, mntpoint, grow, size, maxsize, noformat, onpart, ondisk, asprimary, fstype, start, end, bytes_per_inode, recommended, onbiosdisk, fsoptions)
+		deploy_template_part_conf(template_id, mntpoint, grow, size, maxsize, noformat, onpart, ondisk, asprimary, fstype, start, end, bytes_per_inode, recommended, onbiosdisk, fsoptions)
 		value(#{templateId},#{mntPoint},#{grow},#{size},#{maxSize},#{noFormat},#{onPart},#{onDisk},#{asPrimary},#{fsType},#{start},#{end},#{bytesPerInode},#{recommended},#{onBiosDisk},#{fsOptions});
 	</insert>
 
 	<update id="updateTempPartConf" parameterType="com.asiainfo.gim.deploy.domain.TemplatePartConf">
 		update
-		template_part_conf set 
+		deploy_template_part_conf set 
 		template_id = #{templateId}, 
 		mntpoint = #{mntPoint}, 
 		grow = #{grow}, 
@@ -59,16 +59,16 @@
 		select 
 		* 
 		from
-		template_part_conf
+		deploy_template_part_conf
 		where template_id = #{templateId};
 	</select>
 
 	<delete id="deleteTempPartConfByTemplateId" parameterType="java.lang.String">
-		delete from template_part_conf where template_id = #{templateId};
+		delete from deploy_template_part_conf where template_id = #{templateId};
 	</delete>
 
 	<delete id="deleteTempPartConf" parameterType="java.lang.Integer">
-		delete from template_part_conf where id = #{id};
+		delete from deploy_template_part_conf where id = #{id};
 	</delete>
 
 </mapper>

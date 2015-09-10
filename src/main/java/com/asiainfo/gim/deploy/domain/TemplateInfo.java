@@ -15,6 +15,8 @@ public class TemplateInfo {
 	private String type;
 	
 	private String desc;
+	
+	private String confFilePath;
 
 	public Integer getId() {
 		return id;
@@ -62,6 +64,14 @@ public class TemplateInfo {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public String getConfFilePath() {
+		return confFilePath;
+	}
+
+	public void setConfFilePath(String confFilePath) {
+		this.confFilePath = confFilePath;
 	}
 	
 

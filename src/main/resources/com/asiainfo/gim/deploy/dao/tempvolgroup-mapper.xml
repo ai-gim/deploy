@@ -18,13 +18,13 @@
 	<insert id="createTempVolGroupConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateVolGroupConf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		template_volgroup_conf(template_id, `name`, partition, noformat, useexisting, presize)
+		deploy_template_volgroup_conf(template_id, `name`, partition, noformat, useexisting, presize)
 		value(#{templateId},#{name},#{partition},#{noFormat},#{useExisting},#{preSize});
 	</insert>
 
 	<update id="updateTempVolGroupConf" parameterType="com.asiainfo.gim.deploy.domain.TemplateVolGroupConf">
 		update
-		template_volgroup_conf set 
+		deploy_template_volgroup_conf set 
 		template_id = #{templateId}, 
 		`name` = #{name}, 
 		partition = #{partition}, 
@@ -39,16 +39,16 @@
 		select 
 		* 
 		from
-		template_volgroup_conf
+		deploy_template_volgroup_conf
 		where template_id = #{templateId};
 	</select>
 
 	<delete id="deleteTempVolGroupConfByTemplateId" parameterType="java.lang.String">
-		delete from template_volgroup_conf where template_id = #{templateId};
+		delete from deploy_template_volgroup_conf where template_id = #{templateId};
 	</delete>
 
 	<delete id="deleteTempVolGroupConf" parameterType="java.lang.Integer">
-		delete from template_volgroup_conf where id = #{id};
+		delete from deploy_template_volgroup_conf where id = #{id};
 	</delete>
 
 </mapper>

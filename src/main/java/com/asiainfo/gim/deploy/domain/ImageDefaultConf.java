@@ -1,9 +1,12 @@
 package com.asiainfo.gim.deploy.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ImageDefaultConf {
 	
 	private Integer id;
 	
+	@JsonProperty(value="imagename")
 	private String imageName;
 	
 	private String template;

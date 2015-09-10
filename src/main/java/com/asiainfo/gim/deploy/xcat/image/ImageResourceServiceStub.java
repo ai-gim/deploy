@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 
 import com.asiainfo.gim.deploy.domain.Distro;
 import com.asiainfo.gim.deploy.domain.Image;
+import com.asiainfo.gim.deploy.domain.ImageDefaultConf;
 import com.asiainfo.gim.deploy.json.JsonSerializer;
 import com.asiainfo.gim.deploy.rest.ServiceStub;
 import com.asiainfo.gim.deploy.rest.http.RestRequest;
@@ -73,8 +74,14 @@ public class ImageResourceServiceStub extends ServiceStub {
 
 	public void createOsImage(ImageResourceReq req) {
 		RestRequest request = prepare(req, HttpMethod.POST, "/osimages");
-		if (StringUtils.isNotBlank(req.getArch())
-				|| StringUtils.isNotBlank(req.getOsvers())) {
+		if(StringUtils.isBlank(req.getArch())){
+			req.setArch(null);
+		}
+		if(StringUtils.isBlank(req.getOsvers())){
+			req.setOsvers(null);
+		}
+		if (StringUtils.isNotEmpty(req.getArch())
+				|| StringUtils.isNotEmpty(req.getOsvers())) {
 			Params params = new Params();
 			params.setName(req.getOsvers());
 			params.setArch(req.getArch());
@@ -97,16 +104,45 @@ public class ImageResourceServiceStub extends ServiceStub {
 	}
 
 	public void deleteOsDistro(String distroName) {
-		// 删除image
 		ImageResourceReq req = new ImageResourceReq();
-		req.setOsdistroname(distroName);
-		List<Image> imageList = listOsImages(req);
-		for (Image image : imageList) {
-			deleteOsImage(image.getImagename());
-		}
-		// 删除distro
 		RestRequest request = prepare(req, HttpMethod.DELETE,
-				"/tables/osdistro/rows/osdistroname=" + req.getOsdistroname());
+				"/tables/osdistro/rows/osdistroname=" + distroName);
+		call(request, null);
+	}
+	
+	public List<ImageDefaultConf> listLinuxImageConf(ImageResourceReq req){
+		RestRequest request = prepare(req, HttpMethod.GET, "/tables/linuximage/rows");
+		Map<String, Object> map = call(request, HashMap.class);
+		List<ImageDefaultConf> imageConfList = new ArrayList<ImageDefaultConf>();
+		for (String key : map.keySet()) {
+			List<Object> imageConfs = (List<Object>) map.get(key);
+			for (Object o : imageConfs) {
+				String object = JsonSerializer.o2j(o);
+				ImageDefaultConf imageConf = JsonSerializer.j2o(object, ImageDefaultConf.class);
+				imageConfList.add(imageConf);
+			}
+		}
+		return imageConfList;
+	}
+	
+	public ImageDefaultConf getLinuxImageConfByImageName(String imageName){
+		ImageResourceReq req = new ImageResourceReq();
+		RestRequest request = prepare(req, HttpMethod.GET, "/tables/linuximage/rows/imagename=" + imageName);
+		Map<String, Object> map = call(request, HashMap.class);
+		ImageDefaultConf imageConf = new ImageDefaultConf();
+		for (String key : map.keySet()) {
+			List<Object> imageConfs = (List<Object>) map.get(key);
+			for (Object o : imageConfs) {
+				String object = JsonSerializer.o2j(o);
+				imageConf = JsonSerializer.j2o(object, ImageDefaultConf.class);
+			}
+		}
+		return imageConf;
+	}
+	
+	public void updateLinuxImageConf(ImageResourceReq req){
+		RestRequest request = prepare(req, HttpMethod.PUT, "/tables/linuximage/rows/imagename=" + req.getImageName());
+		request.setBody(req);
 		call(request, null);
 	}
 

@@ -15,20 +15,28 @@
 	<insert id="createImageDefaultConf" parameterType="com.asiainfo.gim.deploy.domain.ImageDefaultConf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		image_default_conf(image_name, template, pkglist)
+		deploy_image_default_conf(image_name, template, pkglist)
 		value(#{imageName},#{template},#{pkgList});
 	</insert>
 
+	<update id="updateImageDefaultConf" parameterType="com.asiainfo.gim.deploy.domain.ImageDefaultConf">
+		update
+		deploy_image_default_conf set template = #{template}, pkglist = #{pkgList} where imageName = #{imageName};
+	</update>
+
 	<select id="listImageDefaultConf" resultMap="imageConf">
-		select * from image_default_conf;
+		select * from
+		deploy_image_default_conf;
 	</select>
 
-	<select id="findImageDefaultConfByImageName" resultMap="imageConf" parameterType="java.lang.String">
-		select * from image_default_conf where image_name=#{imageName};
+	<select id="findImageDefaultConfByImageName" resultMap="imageConf"
+		parameterType="java.lang.String">
+		select * from deploy_image_default_conf where
+		image_name=#{imageName};
 	</select>
 
 	<delete id="deleteImageDefaultConfByImageName" parameterType="java.lang.String">
-		delete from image_default_conf where image_name = #{imageName};
+		delete from deploy_image_default_conf where image_name = #{imageName};
 	</delete>
 
 </mapper>

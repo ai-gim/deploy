@@ -72,6 +72,8 @@ public class TemplateVolGroupConf {
 		this.preSize = preSize;
 	}
 	
-	
+	public String toKickStartStr(){
+		return "volgroup " + name + " " + partition + "\n\r";
+	}
 
 }

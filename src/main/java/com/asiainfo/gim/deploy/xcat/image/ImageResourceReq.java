@@ -26,6 +26,10 @@ public class ImageResourceReq extends AbstractReq{
 	private List<Params> params;
 	
 	private String osdistroname;
+	
+	private String template;
+	
+	private String pkgList;
 
 	@JsonInclude(Include.NON_NULL)
 	public String getProfile() {
@@ -106,6 +110,24 @@ public class ImageResourceReq extends AbstractReq{
 
 	public void setOsdistroname(String osdistroname) {
 		this.osdistroname = osdistroname;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public String getPkgList() {
+		return pkgList;
+	}
+
+	public void setPkgList(String pkgList) {
+		this.pkgList = pkgList;
 	}
 	
 }
