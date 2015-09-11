@@ -3,17 +3,17 @@ package com.asiainfo.gim.deploy.domain;
 import java.util.List;
 
 public class TemplateConf {
-	
+
 	private TemplateInfo tempInfo;
-	
+
 	private List<TemplateBasicConf> tempBaicList;
-	
+
 	private List<TemplatePartConf> tempPartList;
-	
+
 	private List<TemplateVolGroupConf> tempVGList;
-	
+
 	private List<TemplateLogVolConf> tempLVList;
-	
+
 	private List<TemplateUserConf> tempUserList;
 
 	public TemplateInfo getTempInfo() {
@@ -63,7 +63,50 @@ public class TemplateConf {
 	public void setTempUserList(List<TemplateUserConf> tempUserList) {
 		this.tempUserList = tempUserList;
 	}
-	
-	
+
+	public String toKickStartStr() {
+		String br = "\n\r";
+		StringBuffer sb = new StringBuffer();
+		sb.append("keyboard \"us\"" + br);
+		sb.append("zerombr" + br);
+		sb.append("clearpart --all --initlabel" + br);
+		sb.append("%include /tmp/partitioning" + br);
+		sb.append("bootloader" + br);
+		sb.append("install" + br);
+		sb.append("skipx" + br);
+		sb.append("auth --useshadow --enablemd5" + br);
+		sb.append("reboot" + br);
+		sb.append("firewall --disabled" + br);
+		sb.append("selinux --disabled" + br);
+		if (tempBaicList != null) {
+			for (TemplateBasicConf basicConf : tempBaicList) {
+				sb.append(basicConf.toKickStartStr());
+			}
+		}
+		if (tempUserList != null) {
+			for (TemplateUserConf user : tempUserList) {
+				sb.append(user.toKickStartStr());
+			}
+		}
+		if (tempPartList != null) {
+			for (TemplatePartConf p : tempPartList) {
+				sb.append(p.toKickStartStr());
+			}
+		}
+		if (tempVGList != null) {
+			for (TemplateVolGroupConf vg : tempVGList) {
+				sb.append(vg.toKickStartStr());
+			}
+		}
+		if (tempLVList != null) {
+			for (TemplateLogVolConf lv : tempLVList) {
+				sb.append(lv.toKickStartStr());
+			}
+		}
+		sb.append("%packages" + br);
+		sb.append("%pre" + br);
+		sb.append("%post" + br);
+		return sb.toString();
+	}
 
 }

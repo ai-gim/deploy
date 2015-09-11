@@ -18,25 +18,25 @@
 	<insert id="createPostScripts" parameterType="com.asiainfo.gim.deploy.domain.PostScripts"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		post_scripts(`name`, `desc`, file_path, file_name, create_time, `type`)
+		deploy_post_scripts(`name`, `desc`, file_path, file_name, create_time, `type`)
 		value(#{name}, #{desc}, #{filePath},#{fileName}, #{createTime}, #{type});
 	</insert>
 
 	<update id="updatePostScripts" parameterType="com.asiainfo.gim.deploy.domain.PostScripts">
 		update
-		post_scripts set `name` = #{name}, `desc` = #{desc} where id = #{id};
+		deploy_post_scripts set `name` = #{name}, `desc` = #{desc} where id = #{id};
 	</update>
 
 	<select id="listPostScripts" resultMap="postscripts">
-		select * from post_scripts;
+		select * from deploy_post_scripts;
 	</select>
 	
 	<select id="findPostScriptsById" resultMap="postscripts" parameterType="java.lang.Integer">
-		select * from post_scripts where id = #{id};
+		select * from deploy_post_scripts where id = #{id};
 	</select>
 
 	<delete id="deletePostScriptsById" parameterType="java.lang.Integer">
-		delete from post_scripts where id = #{id};
+		delete from deploy_post_scripts where id = #{id};
 	</delete>
 
 </mapper>

@@ -121,5 +121,14 @@ public class TemplateLogVolConf {
 	public void setPrecent(String precent) {
 		this.precent = precent;
 	}
-
+	
+	public String toKickStartStr(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("logvol " + mntPoint);
+		sb.append(" --vgname " + vgName);
+		sb.append(" --size " + size);
+		sb.append(" --name " + name);
+		sb.append("\n\r");
+		return sb.toString();
+	}
 }

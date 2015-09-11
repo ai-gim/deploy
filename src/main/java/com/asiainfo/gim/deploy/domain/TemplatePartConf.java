@@ -172,5 +172,18 @@ public class TemplatePartConf {
 		this.fsOptions = fsOptions;
 	}
 	
+	public String toKickStartStr(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("part " + mntPoint);
+		sb.append(" --size " + size);
+		if(onDisk != null){
+			sb.append(" --ondisk " + onDisk);
+		}
+		if(fsType != null){
+			sb.append(" --fstype " + fsType);
+		}
+		sb.append("\n\r");
+		return sb.toString();
+	}
 
 }

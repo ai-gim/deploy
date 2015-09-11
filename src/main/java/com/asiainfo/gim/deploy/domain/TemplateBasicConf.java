@@ -1,5 +1,7 @@
 package com.asiainfo.gim.deploy.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 public class TemplateBasicConf {
 	
 	private Integer id;
@@ -42,6 +44,17 @@ public class TemplateBasicConf {
 		this.value = value;
 	}
 	
-	
+	public String toKickStartStr(){
+		StringBuffer sb = new StringBuffer();
+		if(StringUtils.equals("lang", attr)){
+			sb.append("lang " + value);
+		}else if(StringUtils.equals("timezone", attr)){
+			sb.append("timezone " + value);
+		}else if(StringUtils.equals("rootpw", attr)){
+			sb.append("rootpw " + value);
+		}
+		sb.append("\n\r");
+		return sb.toString();
+	}
 
 }
