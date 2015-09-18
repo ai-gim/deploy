@@ -6,7 +6,7 @@
 	<artifactId>deploy</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>site</name>
+	<name>deploy</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -113,6 +113,14 @@
 						</goals>
 						<configuration>
 							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/spring.handlers</resource>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/spring.schemas</resource>
+								</transformer>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>com.asiainfo.gim.deploy.Main</mainClass>

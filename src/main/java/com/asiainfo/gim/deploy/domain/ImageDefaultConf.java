@@ -1,8 +1,9 @@
 package com.asiainfo.gim.deploy.domain;
 
+import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ImageDefaultConf {
+public class ImageDefaultConf extends AbstractBean{
 	
 	private Integer id;
 	

@@ -112,5 +112,17 @@ public class ImageService {
 		}
 		return isoList;
 	}
+	
+	public ImageDefaultConf findImageDefaultConfByImageName(String imageName){
+		return imageDefaultConfDao.findImageDefaultConfByImageName(imageName);
+	}
+	
+	public void updateLinuxImageConf(ImageDefaultConf imageConf){
+		ImageResourceReq req = new ImageResourceReq();
+		req.setImageName(imageConf.getImageName());
+		req.setTemplate(imageConf.getTemplate());
+		req.setPkgList(imageConf.getPkgList());
+		imageResourceServiceStub.updateLinuxImageConf(req);
+	}
 
 }
