@@ -12,6 +12,7 @@ public class ImageDefaultConf extends AbstractBean{
 	
 	private String template;
 	
+	@JsonProperty(value="pkglist")
 	private String pkgList;
 
 	public Integer getId() {
