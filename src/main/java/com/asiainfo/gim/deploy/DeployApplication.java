@@ -24,6 +24,6 @@ public class DeployApplication extends ResourceConfig
 		
 		register(MultiPartFeature.class);
 
-		register(AuthorizationFilter.class);
+//		register(AuthorizationFilter.class);
 	}
 }
