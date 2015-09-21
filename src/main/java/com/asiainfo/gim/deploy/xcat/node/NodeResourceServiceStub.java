@@ -113,8 +113,4 @@ public class NodeResourceServiceStub extends ServiceStub {
 		return statMap;
 	}
 
-	public static void main(String[] args) {
-
-	}
-
 }

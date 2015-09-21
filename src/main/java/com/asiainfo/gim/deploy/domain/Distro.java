@@ -1,6 +1,8 @@
 package com.asiainfo.gim.deploy.domain;
 
-public class Distro {
+import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
+
+public class Distro extends AbstractBean {
 	private String osdistroname;
 	private String basename;
 	private String majorversion;

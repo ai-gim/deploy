@@ -1,6 +1,8 @@
 package com.asiainfo.gim.deploy.domain;
 
-public class Image {
+import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
+
+public class Image extends AbstractBean{
 	private String imagename;
 	private String profile;
 	private String provmethod;
@@ -10,6 +12,7 @@ public class Image {
 	private String imagetype;
 	private String osdistroname;
 	private String isoFile;
+	private String templateId;
 	public String getImagename() {
 		return imagename;
 	}
@@ -63,6 +66,12 @@ public class Image {
 	}
 	public void setIsoFile(String isoFile) {
 		this.isoFile = isoFile;
+	}
+	public String getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 }

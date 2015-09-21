@@ -1,10 +1,13 @@
 package com.asiainfo.gim.deploy.domain;
 
+import java.util.List;
+
+import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Node{
+public class Node extends AbstractBean{
 	
 	private String name;
 	private String profile;
@@ -34,6 +37,9 @@ public class Node{
 	private String order;
 	private String action;
 	private String osimage;
+	private String postscripts;
+	private String postbootscripts;
+	private List<Integer> bootScriptIds;
 	@JsonInclude(Include.NON_NULL)
 	public String getName() {
 		return name;
@@ -222,5 +228,26 @@ public class Node{
 	}
 	public void setOsimage(String osimage) {
 		this.osimage = osimage;
+	}
+	@JsonInclude(Include.NON_NULL)
+	public String getPostscripts() {
+		return postscripts;
+	}
+	public void setPostscripts(String postscripts) {
+		this.postscripts = postscripts;
+	}
+	@JsonInclude(Include.NON_NULL)
+	public String getPostbootscripts() {
+		return postbootscripts;
+	}
+	public void setPostbootscripts(String postbootscripts) {
+		this.postbootscripts = postbootscripts;
+	}
+	@JsonInclude(Include.NON_NULL)
+	public List<Integer> getBootScriptIds() {
+		return bootScriptIds;
+	}
+	public void setBootScriptIds(List<Integer> bootScriptIds) {
+		this.bootScriptIds = bootScriptIds;
 	}
 }
