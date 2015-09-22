@@ -65,7 +65,7 @@ public class TemplateConf {
 	}
 
 	public String toKickStartStr() {
-		String br = "\n\r";
+		String br = "\n";
 		StringBuffer sb = new StringBuffer();
 		sb.append("keyboard \"us\"" + br);
 		sb.append("zerombr" + br);
@@ -104,8 +104,11 @@ public class TemplateConf {
 			}
 		}
 		sb.append("%packages" + br);
+		sb.append("#INCLUDE_DEFAULT_PKGLIST#" + br);
 		sb.append("%pre" + br);
+		sb.append("#INCLUDE:#ENV:XCATROOT#/share/xcat/install/scripts/pre.rh#" + br);
 		sb.append("%post" + br);
+		sb.append("#INCLUDE:#ENV:XCATROOT#/share/xcat/install/scripts/post.rh#" + br);
 		return sb.toString();
 	}
 

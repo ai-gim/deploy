@@ -53,7 +53,7 @@ public class TemplateBasicConf {
 		}else if(StringUtils.equals("rootpw", attr)){
 			sb.append("rootpw " + value);
 		}
-		sb.append("\n\r");
+		sb.append("\n");
 		return sb.toString();
 	}
 

@@ -1,5 +1,7 @@
 package com.asiainfo.gim.deploy.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 public class TemplatePartConf {
 	
 	private Integer id;
@@ -176,13 +178,13 @@ public class TemplatePartConf {
 		StringBuffer sb = new StringBuffer();
 		sb.append("part " + mntPoint);
 		sb.append(" --size " + size);
-		if(onDisk != null){
+		if(StringUtils.isNotBlank(onDisk)){
 			sb.append(" --ondisk " + onDisk);
 		}
-		if(fsType != null){
+		if(StringUtils.isNotBlank(fsType)){
 			sb.append(" --fstype " + fsType);
 		}
-		sb.append("\n\r");
+		sb.append("\n");
 		return sb.toString();
 	}
 
