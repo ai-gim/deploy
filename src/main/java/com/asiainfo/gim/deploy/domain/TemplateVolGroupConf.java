@@ -73,7 +73,7 @@ public class TemplateVolGroupConf {
 	}
 	
 	public String toKickStartStr(){
-		return "volgroup " + name + " " + partition + "\n\r";
+		return "volgroup " + name + " " + partition + "\n";
 	}
 
 }

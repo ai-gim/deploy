@@ -1,5 +1,7 @@
 package com.asiainfo.gim.deploy.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 public class TemplateUserConf {
 
 	private Integer id;
@@ -95,13 +97,13 @@ public class TemplateUserConf {
 	public String toKickStartStr(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("user --name " + name);
-		if(groups != null){
+		if(StringUtils.isNotBlank(groups)){
 			sb.append(" --groups " + groups);
 		}
-		if(password != null){
+		if(StringUtils.isNotBlank(password)){
 			sb.append(" --password " + password);
 		}
-		sb.append("\n\r");
+		sb.append("\n");
 		return sb.toString();
 	}
 	

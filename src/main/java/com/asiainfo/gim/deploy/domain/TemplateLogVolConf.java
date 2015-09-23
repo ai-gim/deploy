@@ -128,7 +128,7 @@ public class TemplateLogVolConf {
 		sb.append(" --vgname " + vgName);
 		sb.append(" --size " + size);
 		sb.append(" --name " + name);
-		sb.append("\n\r");
+		sb.append("\n");
 		return sb.toString();
 	}
 }
