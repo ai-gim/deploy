@@ -28,7 +28,7 @@ public class ImageService {
 
 	@Resource
 	private ImageResourceServiceStub imageResourceServiceStub;
-	
+
 	@Resource
 	private ImageDefaultConfDao imageDefaultConfDao;
 
@@ -45,8 +45,8 @@ public class ImageService {
 		ImageResourceReq req = new ImageResourceReq();
 		return imageResourceServiceStub.listOsImages(req);
 	}
-	
-	public List<Distro> listOsDistro(){
+
+	public List<Distro> listOsDistro() {
 		ImageResourceReq req = new ImageResourceReq();
 		return imageResourceServiceStub.listOsDistros(req);
 	}
@@ -57,53 +57,56 @@ public class ImageService {
 		req.setArch(image.getOsarch());
 		req.setOsvers(image.getOsvers());
 		imageResourceServiceStub.createOsImage(req);
-		//更新镜像默认配置表deploy_image_default_conf
+		// 更新镜像默认配置表deploy_image_default_conf
 		ImageResourceReq req1 = new ImageResourceReq();
-		List<ImageDefaultConf> imageConfList = imageResourceServiceStub.listLinuxImageConf(req1);
-		for(ImageDefaultConf imageConf : imageConfList){
-			ImageDefaultConf idc = imageDefaultConfDao.findImageDefaultConfByImageName(imageConf.getImageName());
-			//不存在，则新增
-			if(idc == null){
+		List<ImageDefaultConf> imageConfList = imageResourceServiceStub
+				.listLinuxImageConf(req1);
+		for (ImageDefaultConf imageConf : imageConfList) {
+			ImageDefaultConf idc = imageDefaultConfDao
+					.findImageDefaultConfByImageName(imageConf.getImageName());
+			// 不存在，则新增
+			if (idc == null) {
 				imageDefaultConfDao.createImageDefaultConf(imageConf);
 			}
 		}
 	}
 
 	public void deleteDistro(String distroName) {
-		ImageResourceReq req = new ImageResourceReq();
-		req.setOsdistroname(distroName);
-		List<Image> imageList = imageResourceServiceStub.listOsImages(req);
-		//删除镜像
-		for(Image image : imageList){
-			deleteImage(image.getImagename());
-		}
-		imageResourceServiceStub.deleteOsDistro(distroName);
-		//删除镜像文件
+		// 删除镜像文件
 		List<Distro> distroList = listOsDistro();
-		for(Distro distro : distroList){
-			if(StringUtils.equals(distroName, distro.getOsdistroname())){
+		for (Distro distro : distroList) {
+			if (StringUtils.equals(distroName, distro.getOsdistroname())) {
 				FileUtil.deleteFile(new File(distro.getDirpaths()));
 			}
 		}
+		ImageResourceReq req = new ImageResourceReq();
+		req.setOsdistroname(distroName);
+		List<Image> imageList = imageResourceServiceStub.listOsImages(req);
+		// 删除镜像
+		for (Image image : imageList) {
+			deleteImage(image.getImagename());
+		}
+		imageResourceServiceStub.deleteOsDistro(distroName);
 	}
-	
-	public void deleteImage(String imageName){
+
+	public void deleteImage(String imageName) {
 		imageDefaultConfDao.deleteImageDefaultConfByImageName(imageName);
 		imageResourceServiceStub.deleteOsImage(imageName);
 	}
-	
-	public List<IsoFile> listIsoFiles(String dir){
+
+	public List<IsoFile> listIsoFiles(String dir) {
 		String isoPath;
-		if(StringUtils.isBlank(dir)){
+		if (StringUtils.isBlank(dir)) {
 			isoPath = SpringContext.getProperty("xcat.mn.isopath");
-		}else{
+		} else {
 			isoPath = dir;
 		}
 		List<File> fileList = new ArrayList<File>();
-		fileList = FileUtil.listFile(new File(isoPath),fileList);
+		fileList = FileUtil.listFile(new File(isoPath), fileList);
 		List<IsoFile> isoList = new ArrayList<IsoFile>();
-		for(File file : fileList){
-			if(file.isFile() && StringUtils.endsWithIgnoreCase(file.getName(), ".iso")){
+		for (File file : fileList) {
+			if (file.isFile()
+					&& StringUtils.endsWithIgnoreCase(file.getName(), ".iso")) {
 				IsoFile iso = new IsoFile();
 				iso.setFileName(file.getName());
 				iso.setFilePath(file.getAbsolutePath());
@@ -112,12 +115,12 @@ public class ImageService {
 		}
 		return isoList;
 	}
-	
-	public ImageDefaultConf findImageDefaultConfByImageName(String imageName){
+
+	public ImageDefaultConf findImageDefaultConfByImageName(String imageName) {
 		return imageDefaultConfDao.findImageDefaultConfByImageName(imageName);
 	}
-	
-	public void updateLinuxImageConf(ImageDefaultConf imageConf){
+
+	public void updateLinuxImageConf(ImageDefaultConf imageConf) {
 		ImageResourceReq req = new ImageResourceReq();
 		req.setImageName(imageConf.getImageName());
 		req.setTemplate(imageConf.getTemplate());
