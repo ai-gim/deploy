@@ -1,20 +1,16 @@
 <project name="gim-deploy-deploy" default="build" basedir="..">
 	
-	<property name="USER" value="root"></property>
-	<property name="PASSWD" value="123456"></property>
-	<property name="HOST" value="172.16.102.122"></property>
-	
 	<target name="deploy">
 		<scp todir="${USER}:${PASSWD}@${HOST}:/usr/local/lib/gim" trust="true">
 			<fileset dir="temp">
-				<include name="deploy.zip"/>
+				<include name="deploy.tar.gz"/>
 			</fileset>
 		</scp>
 		<sshexec host="${HOST}" username="${USER}"  password="${PASSWD}" trust="true" command="
 			cd /usr/local/lib/gim;
 			rm -rf deploy;
-			unzip deploy.zip;
-			rm -rf deploy.zip;
+			tar -xzvf deploy.tar.gz;
+			rm -rf deploy.tar.gz;
 			cd deploy/bin;
 			chmod 755 *;
 			./gim-deploy stop;
