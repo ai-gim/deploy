@@ -26,4 +26,12 @@ chmod 755 bin/*
 chmod 755 /etc/rc.d/init.d/gim-deploy
 chkconfig gim-deploy on
 
+path=$(pwd)
+mysql -uroot << EOF
+use gim
+source $path/sql/create_objects.sql;
+EOF
+
+rm -rf $install_dir/deploy.tar.gz
+
 exit 0

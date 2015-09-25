@@ -12,6 +12,7 @@
 		<copydir dest="temp/deploy/bin" src="bin"></copydir>
 		<copydir dest="temp/deploy/conf" src="conf"></copydir>
 		<copydir dest="temp/deploy/init.d" src="init.d"></copydir>
+		<copydir dest="temp/deploy/sql" src="sql"></copydir>
 		<copy tofile="temp/deploy/deploy.jar" file="target/deploy-${VERSION}.jar"></copy>
 	</target>
 	
