@@ -2,13 +2,19 @@ CREATE TABLE IF NOT EXISTS `deploy_template_info` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `template_id` VARCHAR(128) NULL,
   `name` VARCHAR(128) NULL,
-  `type` VARCHAR(45) NULL,
   `desc` VARCHAR(512) NULL,
   `create_date` DATETIME NULL,
-  `conf_file_path` VARCHAR(128) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `template_id_UNIQUE` (`template_id` ASC))
 ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `deploy_template_conffile` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `template_id` VARCHAR(128) NULL,
+  `conf_file_path` VARCHAR(256) NULL,
+  `type` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
 
 CREATE TABLE IF NOT EXISTS `deploy_template_basic_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -81,9 +87,41 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `deploy_image_default_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `image_name` VARCHAR(64) NULL,
+  `image_name` VARCHAR(128) NULL,
   `template` VARCHAR(256) NULL,
   `pkglist` VARCHAR(256) NULL,
+  `pkgdir` VARCHAR(256) NULL,
+  `image_type` VARCHAR(45) NULL,
+  `osdistro_name` VARCHAR(64) NULL,
+  `osarch` VARCHAR(45) NULL,
+  `osname` VARCHAR(45) NULL,
+  `osvers` VARCHAR(45) NULL,
+  `other_pkgdir` VARCHAR(256) NULL,
+  `profile` VARCHAR(45) NULL,
+  `prov_method` VARCHAR(45) NULL,
+  `root_imgdir` VARCHAR(256) NULL,
+  `exlist` VARCHAR(256) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `deploy_image` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(256) NULL,
+  `desc` VARCHAR(512) NULL,
+  `create_time` DATETIME NULL,
+  `ostype` VARCHAR(45) NULL,
+  `osvers` VARCHAR(45) NULL,
+  `osarch` VARCHAR(45) NULL,
+  `isofile` VARCHAR(256) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `deploy_image_template_conf` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(128) NULL,
+  `image_name` VARCHAR(128) NULL,
+  `template_id` VARCHAR(128) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

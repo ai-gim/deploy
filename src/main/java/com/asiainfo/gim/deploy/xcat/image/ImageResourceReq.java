@@ -2,6 +2,7 @@ package com.asiainfo.gim.deploy.xcat.image;
 
 import java.util.List;
 
+import com.asiainfo.gim.deploy.domain.ImageDefaultConf;
 import com.asiainfo.gim.deploy.rest.vp.AbstractReq;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,6 +31,8 @@ public class ImageResourceReq extends AbstractReq{
 	private String template;
 	
 	private String pkgList;
+	
+	private ImageDefaultConf image;
 
 	@JsonInclude(Include.NON_NULL)
 	public String getProfile() {
@@ -128,6 +131,15 @@ public class ImageResourceReq extends AbstractReq{
 
 	public void setPkgList(String pkgList) {
 		this.pkgList = pkgList;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public ImageDefaultConf getImage() {
+		return image;
+	}
+
+	public void setImage(ImageDefaultConf image) {
+		this.image = image;
 	}
 	
 }

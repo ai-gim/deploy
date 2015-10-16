@@ -10,19 +10,25 @@
 		<result property="imageName" column="image_name" />
 		<result property="template" column="template" />
 		<result property="pkgList" column="pkglist" />
+		<result property="pkgDir" column="pkgdir" />
+		<result property="imageType" column="image_type" />
+		<result property="osDistroName" column="osdistro_name" />
+		<result property="osarch" column="osarch" />
+		<result property="osname" column="osname" />
+		<result property="osvers" column="osvers" />
+		<result property="otherPkgDir" column="other_pkgdir" />
+		<result property="profile" column="profile" />
+		<result property="provMethod" column="prov_method" />
+		<result property="rootImgDir" column="root_imgdir" />
+		<result property="exlist" column="exlist" />
 	</resultMap>
 
 	<insert id="createImageDefaultConf" parameterType="com.asiainfo.gim.deploy.domain.ImageDefaultConf"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		deploy_image_default_conf(image_name, template, pkglist)
-		value(#{imageName},#{template},#{pkgList});
+		deploy_image_default_conf(image_name, template, pkglist, pkgdir, image_type, osdistro_name, osarch, osname, osvers, other_pkgdir, profile, prov_method, root_imgdir, exlist)
+		value(#{imageName},#{template},#{pkgList},#{pkgDir},#{imageType},#{osDistroName},#{osarch},#{osname},#{osvers},#{otherPkgDir},#{profile},#{provMethod},#{rootImgDir},#{exlist});
 	</insert>
-
-	<update id="updateImageDefaultConf" parameterType="com.asiainfo.gim.deploy.domain.ImageDefaultConf">
-		update
-		deploy_image_default_conf set template = #{template}, pkglist = #{pkgList} where imageName = #{imageName};
-	</update>
 
 	<select id="listImageDefaultConf" resultMap="imageConf">
 		select * from

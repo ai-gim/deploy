@@ -13,7 +13,5 @@ public interface ImageDefaultConfDao {
 	public void createImageDefaultConf(ImageDefaultConf imageDefaultConf);
 	
 	public void deleteImageDefaultConfByImageName(String imageName);
-	
-	public void updateImageDefaultConf(ImageDefaultConf imageDefaultConf);
 
 }

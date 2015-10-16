@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asiainfo.gim.common.rest.exception.RestException;
 import com.asiainfo.gim.common.spring.SpringContext;
 import com.asiainfo.gim.deploy.dao.TemplateBasicConfDao;
+import com.asiainfo.gim.deploy.dao.TemplateFileDao;
 import com.asiainfo.gim.deploy.dao.TemplateInfoDao;
 import com.asiainfo.gim.deploy.dao.TemplateLogVolConfDao;
 import com.asiainfo.gim.deploy.dao.TemplatePartConfDao;
@@ -23,6 +24,7 @@ import com.asiainfo.gim.deploy.dao.TemplateUserConfDao;
 import com.asiainfo.gim.deploy.dao.TemplateVolGroupConfDao;
 import com.asiainfo.gim.deploy.domain.TemplateBasicConf;
 import com.asiainfo.gim.deploy.domain.TemplateConf;
+import com.asiainfo.gim.deploy.domain.TemplateFile;
 import com.asiainfo.gim.deploy.domain.TemplateInfo;
 import com.asiainfo.gim.deploy.domain.TemplateLogVolConf;
 import com.asiainfo.gim.deploy.domain.TemplatePartConf;
@@ -37,6 +39,8 @@ public class TemplateService {
 	private TemplateBasicConfDao basicConfDao;
 
 	private TemplateInfoDao templateInfoDao;
+	
+	private TemplateFileDao templateFileDao;
 
 	private TemplateLogVolConfDao logVolConfDao;
 
@@ -47,32 +51,39 @@ public class TemplateService {
 	private TemplateVolGroupConfDao volGroupConfDao;
 
 	public TemplateConf createTemplate(TemplateConf templateConf) {
-		TemplateInfo templateInfo = templateConf.getTempInfo();
 		String templateId = UUID.randomUUID().toString();
 		String tempConfDir = SpringContext.getProperty("xcat.mn.ksdir");
 		FileUtil.makeDir(new File(tempConfDir));
-		File confFile = new File(tempConfDir, templateId + ".tmpl");
-		templateInfo.setTemplateId(templateId);
-		templateInfo.setCreateTime(new Date());
-		templateInfo.setConfFilePath(confFile.getAbsolutePath());
-		templateInfoDao.createTemplateInfo(templateInfo);
-		createTempConf(templateConf);
+		File ksConfFile = new File(tempConfDir, templateId + ".ks.tmpl");
 		try {
-			OutputStream out = new FileOutputStream(confFile);
-			out.write(templateConf.toKickStartStr().getBytes("utf-8"));
-			out.close();
+			OutputStream ksOut = new FileOutputStream(ksConfFile);
+			ksOut.write(templateConf.toKickStartStr().getBytes("utf-8"));
+			ksOut.close();
 		} catch (Exception e) {
 			throw new RestException(e);
 		}
+		TemplateFile templateFile = new TemplateFile();
+		templateFile.setTemplateId(templateId);
+		templateFile.setConfFilePath(ksConfFile.getAbsolutePath());
+		templateFile.setType("kickstart");
+		templateFileDao.createTemplateFile(templateFile);
+		TemplateInfo templateInfo = templateConf.getTempInfo();
+		templateInfo.setTemplateId(templateId);
+		templateInfo.setCreateTime(new Date());
+		templateInfoDao.createTemplateInfo(templateInfo);
+		createTempConf(templateConf);
 		return templateConf;
 	}
 
 	public void deleteTemplate(String templateId) {
-		TemplateInfo tempInfo = templateInfoDao.findTempateInfoByTemplateId(templateId);
-		if(StringUtils.isNotEmpty(tempInfo.getConfFilePath())){
-			FileUtil.deleteFile(new File(tempInfo.getConfFilePath()));
+		List<TemplateFile> tempFileList = templateFileDao.listTempateFileByTemplateId(templateId);
+		for(TemplateFile tempFile : tempFileList){
+			if(StringUtils.isNotEmpty(tempFile.getConfFilePath())){
+				FileUtil.deleteFile(new File(tempFile.getConfFilePath()));
+			}
 		}
 		templateInfoDao.deleteTemplateInfo(templateId);
+		templateFileDao.deleteTemplateFile(templateId);
 		deleteTempConf(templateId);
 	}
 
@@ -101,21 +112,28 @@ public class TemplateService {
 
 	public TemplateConf updateTemplate(TemplateConf templateConf) {
 		String templateId = templateConf.getTempInfo().getTemplateId();
-		String tempConfDir = SpringContext.getProperty("xcat.mn.ksdir");
-		FileUtil.makeDir(new File(tempConfDir));
-		File confFile = new File(tempConfDir, templateId + ".tmpl");
-		try {
-			OutputStream out = new FileOutputStream(confFile);
-			out.write(templateConf.toKickStartStr().getBytes("utf-8"));
-			out.close();
-		} catch (Exception e) {
-			throw new RestException(e);
+		List<TemplateFile> tempFileList = templateFileDao.listTempateFileByTemplateId(templateId);
+		for(TemplateFile tempFile : tempFileList){
+			if(StringUtils.equals("kickstart", tempFile.getType())){
+				File ksConfFile = new File(tempFile.getConfFilePath());
+				try {
+					FileUtil.createFile(ksConfFile);
+					OutputStream out = new FileOutputStream(ksConfFile);
+					out.write(templateConf.toKickStartStr().getBytes("utf-8"));
+					out.close();
+				} catch (Exception e) {
+					throw new RestException(e);
+				}
+			}
 		}
-		templateConf.getTempInfo().setConfFilePath(confFile.getAbsolutePath());
 		templateInfoDao.updateTemplateInfo(templateConf.getTempInfo());
 		deleteTempConf(templateId);
 		createTempConf(templateConf);
 		return templateConf;
+	}
+	
+	public List<TemplateFile> listTemplateFileByTemplateId(String templateId){
+		return templateFileDao.listTempateFileByTemplateId(templateId);
 	}
 
 	public TemplateInfo getTemplateInfo(String templateId) {
@@ -181,6 +199,12 @@ public class TemplateService {
 	@Resource
 	public void setTemplateInfoDao(TemplateInfoDao templateInfoDao) {
 		this.templateInfoDao = templateInfoDao;
+	}
+
+	@Resource
+	public void setTemplateFileDao(TemplateFileDao templateFileDao)
+	{
+		this.templateFileDao = templateFileDao;
 	}
 
 	@Resource
