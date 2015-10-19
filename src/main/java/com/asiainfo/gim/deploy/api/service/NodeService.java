@@ -31,20 +31,24 @@ public class NodeService {
 			NodeResourceServiceStub nodeResourceServiceStub) {
 		this.nodeResourceServiceStub = nodeResourceServiceStub;
 	}
-	
+
 	public Node addNode(Node node) {
 		NodeResourceReq req = new NodeResourceReq();
 		req.setNodeRange(node.getName());
 		//去掉不合理参数
 		String action = node.getAction();
 		String order = node.getOrder();
-		String osimage = node.getOsimage();
+		String osImageType = node.getOsImageType();
+		String osImage = node.getOsimage();
+		String templateId = node.getTemplateId();
 		List<Integer> bootScriptIds = node.getBootScriptIds();
 		node.setName(null);
 		node.setAction(null);
 		node.setOrder(null);
 		node.setOsimage(null);
+		node.setOsImageType(null);
 		node.setBootScriptIds(null);
+		node.setTemplateId(null);
 		req.setNode(node);
 		nodeResourceServiceStub.addNode(req);
 		nodeResourceServiceStub.makeHosts(req);
@@ -57,8 +61,10 @@ public class NodeService {
 		node.setName(req.getNodeRange());
 		node.setAction(action);
 		node.setOrder(order);
-		node.setOsimage(osimage);
+		node.setOsimage(osImage);
+		node.setOsImageType(osImageType);
 		node.setBootScriptIds(bootScriptIds);
+		node.setTemplateId(templateId);
 		return node;
 	}
 	

@@ -21,8 +21,6 @@ public class Image extends AbstractBean{
 	private String osArch;
 	
 	private String isoFile;
-	
-	private String templateId;
 
 	public Integer getId() {
 		return id;
@@ -88,12 +86,4 @@ public class Image extends AbstractBean{
 		this.isoFile = isoFile;
 	}
 
-	public String getTemplateId() {
-		return templateId;
-	}
-
-	public void setTemplateId(String templateId) {
-		this.templateId = templateId;
-	}
-	
 }

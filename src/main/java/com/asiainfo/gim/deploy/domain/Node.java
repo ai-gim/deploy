@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Node extends AbstractBean{
-	
+public class Node extends AbstractBean
+{
+
 	private String name;
 	private String profile;
 	private String primarynic;
@@ -21,7 +22,7 @@ public class Node extends AbstractBean{
 	private String power;
 	private String mgt;
 	private String groups;
-	@JsonProperty(value="interface")
+	@JsonProperty(value = "interface")
 	private String intf;
 	private String nfsserver;
 	private String mac;
@@ -40,214 +41,358 @@ public class Node extends AbstractBean{
 	private String postscripts;
 	private String postbootscripts;
 	private List<Integer> bootScriptIds;
+	private String templateId;
+	private String osImageType;
 	@JsonInclude(Include.NON_NULL)
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
-	public void setName(String name) {
+
+	public void setName(String name)
+	{
 		this.name = name;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getProfile() {
+	public String getProfile()
+	{
 		return profile;
 	}
-	public void setProfile(String profile) {
+
+	public void setProfile(String profile)
+	{
 		this.profile = profile;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getPrimarynic() {
+	public String getPrimarynic()
+	{
 		return primarynic;
 	}
-	public void setPrimarynic(String primarynic) {
+
+	public void setPrimarynic(String primarynic)
+	{
 		this.primarynic = primarynic;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getStatus() {
+	public String getStatus()
+	{
 		return status;
 	}
-	public void setStatus(String status) {
+
+	public void setStatus(String status)
+	{
 		this.status = status;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getNetboot() {
+	public String getNetboot()
+	{
 		return netboot;
 	}
-	public void setNetboot(String netboot) {
+
+	public void setNetboot(String netboot)
+	{
 		this.netboot = netboot;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getIp() {
+	public String getIp()
+	{
 		return ip;
 	}
-	public void setIp(String ip) {
+
+	public void setIp(String ip)
+	{
 		this.ip = ip;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getArch() {
+	public String getArch()
+	{
 		return arch;
 	}
-	public void setArch(String arch) {
+
+	public void setArch(String arch)
+	{
 		this.arch = arch;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getOs() {
+	public String getOs()
+	{
 		return os;
 	}
-	public void setOs(String os) {
+
+	public void setOs(String os)
+	{
 		this.os = os;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getKernel() {
+	public String getKernel()
+	{
 		return kernel;
 	}
-	public void setKernel(String kernel) {
+
+	public void setKernel(String kernel)
+	{
 		this.kernel = kernel;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getPower() {
+	public String getPower()
+	{
 		return power;
 	}
-	public void setPower(String power) {
+
+	public void setPower(String power)
+	{
 		this.power = power;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getMgt() {
+	public String getMgt()
+	{
 		return mgt;
 	}
-	public void setMgt(String mgt) {
+
+	public void setMgt(String mgt)
+	{
 		this.mgt = mgt;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getGroups() {
+	public String getGroups()
+	{
 		return groups;
 	}
-	public void setGroups(String groups) {
+
+	public void setGroups(String groups)
+	{
 		this.groups = groups;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getIntf() {
+	public String getIntf()
+	{
 		return intf;
 	}
-	public void setIntf(String intf) {
+
+	public void setIntf(String intf)
+	{
 		this.intf = intf;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getNfsserver() {
+	public String getNfsserver()
+	{
 		return nfsserver;
 	}
-	public void setNfsserver(String nfsserver) {
+
+	public void setNfsserver(String nfsserver)
+	{
 		this.nfsserver = nfsserver;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getMac() {
+	public String getMac()
+	{
 		return mac;
 	}
-	public void setMac(String mac) {
+
+	public void setMac(String mac)
+	{
 		this.mac = mac;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getXcatmaster() {
+	public String getXcatmaster()
+	{
 		return xcatmaster;
 	}
-	public void setXcatmaster(String xcatmaster) {
+
+	public void setXcatmaster(String xcatmaster)
+	{
 		this.xcatmaster = xcatmaster;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getInstallnic() {
+	public String getInstallnic()
+	{
 		return installnic;
 	}
-	public void setInstallnic(String installnic) {
+
+	public void setInstallnic(String installnic)
+	{
 		this.installnic = installnic;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getNictypes() {
+	public String getNictypes()
+	{
 		return nictypes;
 	}
-	public void setNictypes(String nictypes) {
+
+	public void setNictypes(String nictypes)
+	{
 		this.nictypes = nictypes;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getNicips() {
+	public String getNicips()
+	{
 		return nicips;
 	}
-	public void setNicips(String nicips) {
+
+	public void setNicips(String nicips)
+	{
 		this.nicips = nicips;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getNodetype() {
+	public String getNodetype()
+	{
 		return nodetype;
 	}
-	public void setNodetype(String nodetype) {
+
+	public void setNodetype(String nodetype)
+	{
 		this.nodetype = nodetype;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getBmc() {
+	public String getBmc()
+	{
 		return bmc;
 	}
-	public void setBmc(String bmc) {
+
+	public void setBmc(String bmc)
+	{
 		this.bmc = bmc;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public Integer getBmcport() {
+	public Integer getBmcport()
+	{
 		return bmcport;
 	}
-	public void setBmcport(Integer bmcport) {
+
+	public void setBmcport(Integer bmcport)
+	{
 		this.bmcport = bmcport;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getBmcusername() {
+	public String getBmcusername()
+	{
 		return bmcusername;
 	}
-	public void setBmcusername(String bmcusername) {
+
+	public void setBmcusername(String bmcusername)
+	{
 		this.bmcusername = bmcusername;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getBmcpassword() {
+	public String getBmcpassword()
+	{
 		return bmcpassword;
 	}
-	public void setBmcpassword(String bmcpassword) {
+
+	public void setBmcpassword(String bmcpassword)
+	{
 		this.bmcpassword = bmcpassword;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getOrder() {
+	public String getOrder()
+	{
 		return order;
 	}
-	public void setOrder(String order) {
+
+	public void setOrder(String order)
+	{
 		this.order = order;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getAction() {
+	public String getAction()
+	{
 		return action;
 	}
-	public void setAction(String action) {
+
+	public void setAction(String action)
+	{
 		this.action = action;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getOsimage() {
-		return osimage;
+	public String getOsImageType()
+	{
+		return osImageType;
 	}
-	public void setOsimage(String osimage) {
-		this.osimage = osimage;
+
+	public void setOsImageType(String osImageType)
+	{
+		this.osImageType = osImageType;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getPostscripts() {
+	public String getPostscripts()
+	{
 		return postscripts;
 	}
-	public void setPostscripts(String postscripts) {
+
+
+	public void setPostscripts(String postscripts)
+	{
 		this.postscripts = postscripts;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public String getPostbootscripts() {
+	public String getPostbootscripts()
+	{
 		return postbootscripts;
 	}
-	public void setPostbootscripts(String postbootscripts) {
+
+	public void setPostbootscripts(String postbootscripts)
+	{
 		this.postbootscripts = postbootscripts;
 	}
+
 	@JsonInclude(Include.NON_NULL)
-	public List<Integer> getBootScriptIds() {
+	public List<Integer> getBootScriptIds()
+	{
 		return bootScriptIds;
 	}
-	public void setBootScriptIds(List<Integer> bootScriptIds) {
+
+	public void setBootScriptIds(List<Integer> bootScriptIds)
+	{
 		this.bootScriptIds = bootScriptIds;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public String getTemplateId()
+	{
+		return templateId;
+	}
+
+	public void setTemplateId(String templateId)
+	{
+		this.templateId = templateId;
+	}
+
+	@JsonInclude(Include.NON_NULL)
+	public String getOsimage()
+	{
+		return osimage;
+	}
+
+	public void setOsimage(String osimage)
+	{
+		this.osimage = osimage;
 	}
 }

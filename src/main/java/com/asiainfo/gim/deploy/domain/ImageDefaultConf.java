@@ -1,7 +1,9 @@
 package com.asiainfo.gim.deploy.domain;
 
 import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class ImageDefaultConf extends AbstractBean{
 	
@@ -43,6 +45,7 @@ public class ImageDefaultConf extends AbstractBean{
 	
 	private String exlist;
 
+	@JsonInclude(Include.NON_NULL)
 	public Integer getId() {
 		return id;
 	}
@@ -51,6 +54,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.id = id;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getImageName() {
 		return imageName;
 	}
@@ -59,6 +63,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.imageName = imageName;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getTemplate() {
 		return template;
 	}
@@ -67,6 +72,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.template = template;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getPkgList() {
 		return pkgList;
 	}
@@ -75,6 +81,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.pkgList = pkgList;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getPkgDir() {
 		return pkgDir;
 	}
@@ -83,6 +90,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.pkgDir = pkgDir;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getImageType() {
 		return imageType;
 	}
@@ -91,6 +99,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.imageType = imageType;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getOsDistroName() {
 		return osDistroName;
 	}
@@ -99,6 +108,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.osDistroName = osDistroName;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getOsarch() {
 		return osarch;
 	}
@@ -107,6 +117,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.osarch = osarch;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getOsname() {
 		return osname;
 	}
@@ -115,6 +126,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.osname = osname;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getOsvers() {
 		return osvers;
 	}
@@ -123,6 +135,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.osvers = osvers;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getOtherPkgDir() {
 		return otherPkgDir;
 	}
@@ -131,6 +144,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.otherPkgDir = otherPkgDir;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getProfile() {
 		return profile;
 	}
@@ -139,6 +153,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.profile = profile;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getProvMethod() {
 		return provMethod;
 	}
@@ -147,6 +162,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.provMethod = provMethod;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getRootImgDir() {
 		return rootImgDir;
 	}
@@ -155,6 +171,7 @@ public class ImageDefaultConf extends AbstractBean{
 		this.rootImgDir = rootImgDir;
 	}
 
+	@JsonInclude(Include.NON_NULL)
 	public String getExlist() {
 		return exlist;
 	}
