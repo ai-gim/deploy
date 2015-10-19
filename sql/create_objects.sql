@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `deploy_template_conffile` (
   `conf_file_path` VARCHAR(256) NULL,
   `type` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `deploy_template_basic_conf` (
   `id` INT NOT NULL AUTO_INCREMENT,
