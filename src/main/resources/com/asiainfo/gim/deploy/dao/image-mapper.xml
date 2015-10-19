@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.ImageDao">
+	<resultMap id="image"
+		type="com.asiainfo.gim.deploy.domain.Image">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="desc" column="desc" />
+		<result property="createTime" column="create_time" />
+		<result property="osType" column="ostype" />
+		<result property="osVersion" column="osvers" />
+		<result property="osArch" column="osarch" />
+		<result property="isoFile" column="isofile" />
+	</resultMap>
+
+	<insert id="createImage" parameterType="com.asiainfo.gim.deploy.domain.Image"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		deploy_image(`name`, `desc`, create_time, ostype, osvers, osarch, isofile)
+		value(#{name},#{desc},#{createTime},#{osType},#{osVersion},#{osArch},#{isoFile});
+	</insert>
+
+	<select id="listImage" resultMap="image">
+		select * from deploy_image;
+	</select>
+
+	<select id="findImageById" resultMap="image"
+		parameterType="java.lang.Integer">
+		select * from deploy_image where id=#{id};
+	</select>
+
+	<delete id="deleteImageById" parameterType="java.lang.Integer">
+		delete from deploy_image where id = #{id};
+	</delete>
+
+</mapper>

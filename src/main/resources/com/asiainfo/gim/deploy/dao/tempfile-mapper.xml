@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.TemplateFileDao">
+	<resultMap id="templateFile" type="com.asiainfo.gim.deploy.domain.TemplateFile">
+		<id property="id" column="id" />
+		<result property="templateId" column="template_id"/>
+		<result property="confFilePath" column="conf_file_path"/>
+		<result property="type" column="type"/>
+	</resultMap>
+
+	<insert id="createTemplateFile" parameterType="com.asiainfo.gim.deploy.domain.TemplateFile" 
+		useGeneratedKeys="true" keyProperty="id">
+		insert into deploy_template_conffile(template_id, conf_file_path, `type`)
+		value(#{templateId}, #{confFilePath}, #{type});
+	</insert>
+	
+	<select id="listTempateFileByTemplateId" resultMap="templateFile" parameterType="java.lang.String">
+		select * from deploy_template_conffile where template_id = #{templateId};
+	</select>
+
+	<delete id="deleteTemplateFile" parameterType="java.lang.String">
+		delete from deploy_template_conffile where template_id = #{templateId};
+	</delete>
+	
+</mapper>

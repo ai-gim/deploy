@@ -2,6 +2,7 @@ package com.asiainfo.gim.deploy.api.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.asiainfo.gim.common.spring.SpringContext;
+import com.asiainfo.gim.deploy.dao.ImageDao;
 import com.asiainfo.gim.deploy.dao.ImageDefaultConfDao;
 import com.asiainfo.gim.deploy.domain.Distro;
 import com.asiainfo.gim.deploy.domain.Image;
@@ -31,6 +33,9 @@ public class ImageService {
 
 	@Resource
 	private ImageDefaultConfDao imageDefaultConfDao;
+	
+	@Resource
+	private ImageDao imageDao;
 
 	public void setImageResourceServiceStub(
 			ImageResourceServiceStub imageResourceServiceStub) {
@@ -41,9 +46,12 @@ public class ImageService {
 		this.imageDefaultConfDao = imageDefaultConfDao;
 	}
 
-	public List<Image> listOsImage() {
-		ImageResourceReq req = new ImageResourceReq();
-		return imageResourceServiceStub.listOsImages(req);
+	public void setImageDao(ImageDao imageDao) {
+		this.imageDao = imageDao;
+	}
+
+	public List<ImageDefaultConf> listImageDefaultConf() {
+		return imageDefaultConfDao.listImageDefaultConf();
 	}
 
 	public List<Distro> listOsDistro() {
@@ -54,13 +62,16 @@ public class ImageService {
 	public void createImage(Image image) {
 		ImageResourceReq req = new ImageResourceReq();
 		req.setIso(image.getIsoFile());
-		req.setArch(image.getOsarch());
-		req.setOsvers(image.getOsvers());
-		imageResourceServiceStub.createOsImage(req);
+		req.setArch(image.getOsArch());
+		req.setOsvers(image.getOsType()+image.getOsVersion());
+		imageResourceServiceStub.copyCds(req);
+		image.setCreateTime(new Date());
+		imageDao.createImage(image);
 		// 更新镜像默认配置表deploy_image_default_conf
 		ImageResourceReq req1 = new ImageResourceReq();
-		List<ImageDefaultConf> imageConfList = imageResourceServiceStub
-				.listLinuxImageConf(req1);
+		String osdistroname = image.getOsType()+image.getOsVersion() + "-" + image.getOsArch();
+		req1.setOsdistroname(osdistroname);
+		List<ImageDefaultConf> imageConfList = imageResourceServiceStub.listOsImages(req1);
 		for (ImageDefaultConf imageConf : imageConfList) {
 			ImageDefaultConf idc = imageDefaultConfDao
 					.findImageDefaultConfByImageName(imageConf.getImageName());
@@ -70,8 +81,23 @@ public class ImageService {
 			}
 		}
 	}
+	
+	public List<Image> listImage(){
+		return imageDao.listImage();
+	}
+	
+	public Image getImage(int id){
+		return imageDao.findImageById(id);
+	}
+	
+	public void deleteImage(int id){
+		Image image = imageDao.findImageById(id);
+		String distroName = image.getOsType()+image.getOsVersion() + "-" + image.getOsArch();
+		imageDao.deleteImageById(id);
+		deleteDistro(distroName);
+	}
 
-	public void deleteDistro(String distroName) {
+	private void deleteDistro(String distroName) {
 		// 删除镜像文件
 		List<Distro> distroList = listOsDistro();
 		for (Distro distro : distroList) {
@@ -81,15 +107,15 @@ public class ImageService {
 		}
 		ImageResourceReq req = new ImageResourceReq();
 		req.setOsdistroname(distroName);
-		List<Image> imageList = imageResourceServiceStub.listOsImages(req);
+		List<ImageDefaultConf> imageList = imageResourceServiceStub.listOsImages(req);
 		// 删除镜像
-		for (Image image : imageList) {
-			deleteImage(image.getImagename());
+		for (ImageDefaultConf image : imageList) {
+			deleteImage(image.getImageName());
 		}
 		imageResourceServiceStub.deleteOsDistro(distroName);
 	}
 
-	public void deleteImage(String imageName) {
+	private void deleteImage(String imageName) {
 		imageDefaultConfDao.deleteImageDefaultConfByImageName(imageName);
 		imageResourceServiceStub.deleteOsImage(imageName);
 	}

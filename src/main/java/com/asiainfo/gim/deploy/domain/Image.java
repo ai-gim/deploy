@@ -1,77 +1,99 @@
 package com.asiainfo.gim.deploy.domain;
 
+import java.util.Date;
+
 import com.asiainfo.gim.deploy.rest.vp.AbstractBean;
 
 public class Image extends AbstractBean{
-	private String imagename;
-	private String profile;
-	private String provmethod;
-	private String osvers;
-	private String osarch;
-	private String osname;
-	private String imagetype;
-	private String osdistroname;
+	
+	private Integer id;
+	
+	private String name;
+	
+	private String desc;
+	
+	private Date createTime;
+	
+	private String osType;
+	
+	private String osVersion;
+	
+	private String osArch;
+	
 	private String isoFile;
+	
 	private String templateId;
-	public String getImagename() {
-		return imagename;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setImagename(String imagename) {
-		this.imagename = imagename;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getProfile() {
-		return profile;
+
+	public String getName() {
+		return name;
 	}
-	public void setProfile(String profile) {
-		this.profile = profile;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getProvmethod() {
-		return provmethod;
+
+	public String getDesc() {
+		return desc;
 	}
-	public void setProvmethod(String provmethod) {
-		this.provmethod = provmethod;
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
-	public String getOsvers() {
-		return osvers;
+
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setOsvers(String osvers) {
-		this.osvers = osvers;
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
-	public String getOsarch() {
-		return osarch;
+
+	public String getOsType() {
+		return osType;
 	}
-	public void setOsarch(String osarch) {
-		this.osarch = osarch;
+
+	public void setOsType(String osType) {
+		this.osType = osType;
 	}
-	public String getOsname() {
-		return osname;
+
+	public String getOsVersion() {
+		return osVersion;
 	}
-	public void setOsname(String osname) {
-		this.osname = osname;
+
+	public void setOsVersion(String osVersion) {
+		this.osVersion = osVersion;
 	}
-	public String getImagetype() {
-		return imagetype;
+
+	public String getOsArch() {
+		return osArch;
 	}
-	public void setImagetype(String imagetype) {
-		this.imagetype = imagetype;
+
+	public void setOsArch(String osArch) {
+		this.osArch = osArch;
 	}
-	public String getOsdistroname() {
-		return osdistroname;
-	}
-	public void setOsdistroname(String osdistroname) {
-		this.osdistroname = osdistroname;
-	}
+
 	public String getIsoFile() {
 		return isoFile;
 	}
+
 	public void setIsoFile(String isoFile) {
 		this.isoFile = isoFile;
 	}
+
 	public String getTemplateId() {
 		return templateId;
 	}
+
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;
 	}
-
+	
 }

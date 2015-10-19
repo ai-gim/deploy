@@ -9,19 +9,17 @@
 		<result property="templateId" column="template_id"/>
 		<result property="createTime" column="create_date"/>
 		<result property="name" column="name"/>
-		<result property="type" column="type"/>
 		<result property="desc" column="desc"/>
-		<result property="confFilePath" column="conf_file_path"/>
 	</resultMap>
 
 	<insert id="createTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo" 
 		useGeneratedKeys="true" keyProperty="id">
-		insert into deploy_template_info(template_id, create_date, `name`, `type`, `desc`, conf_file_path)
-		value(#{templateId}, #{createTime}, #{name}, #{type}, #{desc}, #{confFilePath});
+		insert into deploy_template_info(template_id, create_date, `name`, `desc`)
+		value(#{templateId}, #{createTime}, #{name}, #{desc});
 	</insert>
 	
 	<update id="updateTemplateInfo" parameterType="com.asiainfo.gim.deploy.domain.TemplateInfo">
-		update deploy_template_info set `name` = #{name}, `type`=type, `desc` = #{desc}, conf_file_path = #{confFilePath} where template_id = #{templateId};
+		update deploy_template_info set `name` = #{name} `desc` = #{desc} where template_id = #{templateId};
 	</update>
 	
 	<select id="listTemplateInfo" resultMap="templateInfo">
