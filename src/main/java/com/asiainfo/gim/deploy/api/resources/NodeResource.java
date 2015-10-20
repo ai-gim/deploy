@@ -15,9 +15,11 @@ import org.apache.commons.lang.StringUtils;
 
 import com.asiainfo.gim.common.rest.exception.RestException;
 import com.asiainfo.gim.common.spring.SpringContext;
+import com.asiainfo.gim.deploy.api.service.ImageService;
 import com.asiainfo.gim.deploy.api.service.NodeService;
 import com.asiainfo.gim.deploy.api.service.PostScriptsService;
 import com.asiainfo.gim.deploy.api.validator.NodeValidator;
+import com.asiainfo.gim.deploy.domain.ImageTemplate;
 import com.asiainfo.gim.deploy.domain.Node;
 
 @Path("/noderes")
@@ -27,6 +29,8 @@ public class NodeResource {
 	private PostScriptsService postScriptsService;
 
 	private NodeService nodeService;
+	
+	private ImageService imageService;
 
 	@PathParam("noderange")
 	private String nodeRange;
@@ -35,6 +39,7 @@ public class NodeResource {
 		postScriptsService = (PostScriptsService) SpringContext
 				.getBean("postScriptsService");
 		nodeService = (NodeService) SpringContext.getBean("nodeService");
+		imageService = (ImageService) SpringContext.getBean("imageService");
 	}
 
 	@POST
@@ -67,10 +72,14 @@ public class NodeResource {
 
 	@POST
 	@Path("/installos")
-	public String installOs(@NodeValidator Node node) {
+	public void installOs(@NodeValidator Node node) {
+		// 增加镜像模板
+		ImageTemplate imageTemplate = new ImageTemplate();
+		imageTemplate.setImageName(node.getOsImageType());
+		imageTemplate.setTemplateId(node.getTemplateId());
+		imageTemplate = imageService.createImageTemplate(imageTemplate);
 		// 安装os
-		nodeService.installOsToNode(node.getName(), node.getOsimage());
-		return "success";
+		nodeService.installOsToNode(node.getName(), imageTemplate.getName());
 	}
 
 	@GET

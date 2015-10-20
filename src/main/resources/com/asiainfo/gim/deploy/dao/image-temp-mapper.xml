@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asiainfo.gim.deploy.dao.ImageTemplateDao">
+	<resultMap id="imagetemp"
+		type="com.asiainfo.gim.deploy.domain.ImageTemplate">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="imageName" column="image_name" />
+		<result property="templateId" column="template_id" />
+	</resultMap>
+
+	<insert id="createImageTemplate" parameterType="com.asiainfo.gim.deploy.domain.ImageTemplate"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		deploy_image_template_conf(`name`, image_name, template_id)
+		value(#{name},#{imageName},#{templateId});
+	</insert>
+
+	<select id="listImageTemplate" resultMap="imagetemp">
+		select * from deploy_image_template_conf;
+	</select>
+
+	<select id="findImageTemplateById" resultMap="imagetemp"
+		parameterType="java.lang.Integer">
+		select * from deploy_image_template_conf where id=#{id};
+	</select>
+
+	<delete id="deleteImageTemplateById" parameterType="java.lang.Integer">
+		delete from deploy_image_template_conf where id = #{id};
+	</delete>
+
+</mapper>
