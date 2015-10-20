@@ -72,7 +72,7 @@ public class NodeResource {
 
 	@POST
 	@Path("/installos")
-	public String installOs(@NodeValidator Node node) {
+	public void installOs(@NodeValidator Node node) {
 		// 增加镜像模板
 		ImageTemplate imageTemplate = new ImageTemplate();
 		imageTemplate.setImageName(node.getOsImageType());
@@ -80,7 +80,6 @@ public class NodeResource {
 		imageTemplate = imageService.createImageTemplate(imageTemplate);
 		// 安装os
 		nodeService.installOsToNode(node.getName(), imageTemplate.getName());
-		return "success";
 	}
 
 	@GET
